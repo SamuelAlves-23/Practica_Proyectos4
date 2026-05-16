@@ -53,11 +53,16 @@
 - Raptan huevo y desaparecen (0.5s delay)
 - Ubicación: `Assets/Scripts/Mechanics/Intruder/`
 
+### ✅ Ataque (PlayerAttack.cs)
+- Melee attack con radio de 2m
+- Cooldown de 0.5s
+- Elimina intrusos en rango al presionar Attack (E)
+- Ubicación: `Assets/Scripts/Mechanics/Player/`
+
 ---
 
 ## Pendiente
 
-- [ ] Sistema de Ataque (Attack) - Melee para eliminar intrusos
 - [ ] GameManager
 - [ ] Animaciones
 
@@ -90,3 +95,10 @@
 2. Añadir script Intruder
 3. Añadir componente NavMeshAgent
 4. Añadir Collider (Trigger = false)
+
+### PlayerAttack Setup
+1. Añadir script PlayerAttack al GameObject del player
+2. Asignar PlayerInputHandler al campo _inputHandler
+3. Ajustar _attackRange (default: 2m)
+4. Ajustar _attackCooldown (default: 0.5s)
+5. Presionar E (o botón de Attack) para eliminar intrusos cercanos
