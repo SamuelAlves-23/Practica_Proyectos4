@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using ProtectTheForest.Mechanics.Config;
+using SOTG.Mechanics.Config;
 
-namespace ProtectTheForest.Mechanics.Egg
+namespace SOTG.Mechanics.Egg
 {
     /// <summary>
     /// Spawns eggs at random positions on the NavMesh.
@@ -18,9 +18,9 @@ namespace ProtectTheForest.Mechanics.Egg
         [SerializeField] private float _spawnRadius = 20f;
         [SerializeField] private Vector2 _spawnAreaCenter = Vector2.zero;
 
-        private List<Egg> _spawnedEggs = new List<Egg>();
+        private List<EggEntity> _spawnedEggs = new List<EggEntity>();
 
-        public IReadOnlyList<Egg> SpawnedEggs => _spawnedEggs;
+        public IReadOnlyList<EggEntity> SpawnedEggs => _spawnedEggs;
 
         private void Start()
         {
@@ -56,7 +56,7 @@ namespace ProtectTheForest.Mechanics.Egg
             GameObject eggObj = Instantiate(_eggPrefab, spawnPosition, Quaternion.identity);
             eggObj.transform.parent = transform;
 
-            Egg egg = eggObj.GetComponent<Egg>();
+            EggEntity egg = eggObj.GetComponent<EggEntity>();
             if (egg != null)
             {
                 egg.OnKidnapped += HandleEggKidnapped;
@@ -78,7 +78,7 @@ namespace ProtectTheForest.Mechanics.Egg
             return Vector3.zero;
         }
 
-        private void HandleEggKidnapped(Egg egg)
+        private void HandleEggKidnapped(EggEntity egg)
         {
             if (_spawnedEggs.Contains(egg))
             {
@@ -90,12 +90,12 @@ namespace ProtectTheForest.Mechanics.Egg
         /// <summary>
         /// Returns the closest egg to a given position.
         /// </summary>
-        public Egg GetClosestEgg(Vector3 position)
+        public EggEntity GetClosestEgg(Vector3 position)
         {
-            Egg closest = null;
+            EggEntity closest = null;
             float closestDistance = float.MaxValue;
 
-            foreach (Egg egg in _spawnedEggs)
+            foreach (EggEntity egg in _spawnedEggs)
             {
                 if (egg == null || egg.IsKidnapped) continue;
 

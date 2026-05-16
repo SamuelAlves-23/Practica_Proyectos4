@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace ProtectTheForest.Mechanics.Player
+namespace SOTG.Mechanics.Player
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class PlayerMovement : MonoBehaviour

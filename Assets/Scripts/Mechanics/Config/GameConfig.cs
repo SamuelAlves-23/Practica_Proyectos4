@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace ProtectTheForest.Mechanics.Config
+namespace SOTG.Mechanics.Config
 {
 
-    [CreateAssetMenu(fileName = "GameConfig", menuName = "ProtectTheForest/GameConfig")]
+    [CreateAssetMenu(fileName = "GameConfig", menuName = "SOTG/GameConfig")]
     public class GameConfig : ScriptableObject
     {
         [Header("Game Settings")]

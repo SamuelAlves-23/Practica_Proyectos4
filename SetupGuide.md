@@ -1,4 +1,4 @@
-# Protect the Forest - Setup Guide
+# Shadows of The Grove (SOTG) - Setup Guide
 
 ## Estado Actual
 - Unity 6.0.3
@@ -11,7 +11,7 @@
 
 ### 1. Configuración Básica
 - [ ] Crear **NavMesh** en la escena (Window → AI → Navigation)
-- [ ] Crear **GameConfig** en `Assets/Resources/`: Create → ProtectTheForest → GameConfig
+- [ ] Crear **GameConfig** en `Assets/Resources/`: Create → SOTG → GameConfig
 
 ### 2. Player Setup
 - [ ] GameObject con:
@@ -43,23 +43,27 @@
 - Input convertido a dirección de cámara
 - Ubicación: `Assets/Scripts/Mechanics/Player/`
 
-### ✅ Huevos (Egg.cs + EggSpawner.cs)
+### ✅ Huevos (EggEntity.cs + EggSpawner.cs)
 - Spawn automático de 10 huevos en NavMesh
 - Detección de raptado via evento OnKidnapped
 - Ubicación: `Assets/Scripts/Mechanics/Egg/`
+
+### ✅ Intrusos (Intruder.cs + IntruderSpawner.cs)
+- AI con NavMesh que busca huevo más cercano
+- Raptan huevo y desaparecen (0.5s delay)
+- Ubicación: `Assets/Scripts/Mechanics/Intruder/`
 
 ---
 
 ## Pendiente
 
-- [ ] Sistema de Intrusos (Intruder)
 - [ ] Sistema de Ataque (Attack) - Melee para eliminar intrusos
 - [ ] GameManager
 - [ ] Animaciones
 
 ---
 
-## Setup para Prueba de Huevos
+## Setup para Prueba
 
 ### EggSpawner en escena
 1. Crear GameObject vacío "EggSpawner"
@@ -70,6 +74,19 @@
 
 ### Prefab Egg
 1. Crear esfera o modelo 3D
-2. Añadir script Egg
+2. Añadir script EggEntity
 3. Añadir Collider (Trigger = false)
 4. Optional: Añadir Rigidbody (isKinematic = true)
+
+### IntruderSpawner en escena
+1. Crear GameObject vacío "IntruderSpawner"
+2. Añadir script IntruderSpawner
+3. Asignar Prefab de intruso al campo _intruderPrefab
+4. Ajustar _spawnRadius (default: 20)
+5. Ejecutar - Aparecen 5 intrusos en posiciones NavMesh aleatorias
+
+### Prefab Intruder
+1. Crear modelo 3D (cubo/esfera de otro color)
+2. Añadir script Intruder
+3. Añadir componente NavMeshAgent
+4. Añadir Collider (Trigger = false)

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace ProtectTheForest.Mechanics.Player
+namespace SOTG.Mechanics.Player
 {
 
     public class PlayerInputHandler : MonoBehaviour, Player_InputAction.IPlayerActions

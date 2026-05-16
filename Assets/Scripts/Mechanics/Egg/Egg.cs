@@ -1,11 +1,11 @@
 using UnityEngine;
 
-namespace ProtectTheForest.Mechanics.Egg
+namespace SOTG.Mechanics.Egg
 {
     /// <summary>
     /// Represents an egg that can be kidnapped by intruders.
     /// </summary>
-    public class Egg : MonoBehaviour
+    public class EggEntity : MonoBehaviour
     {
         [Header("Status")]
         [SerializeField] private bool _isKidnapped = false;
@@ -24,7 +24,7 @@ namespace ProtectTheForest.Mechanics.Egg
             Destroy(gameObject);
         }
 
-        public System.Action<Egg> OnKidnapped;
+        public System.Action<EggEntity> OnKidnapped;
 
         /// <summary>
         /// Called when player rescues this egg (if carried).
@@ -35,6 +35,6 @@ namespace ProtectTheForest.Mechanics.Egg
             OnRescued?.Invoke(this);
         }
 
-        public System.Action<Egg> OnRescued;
+        public System.Action<EggEntity> OnRescued;
     }
 }
