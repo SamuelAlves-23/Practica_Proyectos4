@@ -50,7 +50,7 @@ namespace SOTG.Mechanics.Player
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, _attackRange);
             foreach (var collider in hitColliders)
             {
-                Intruder intruder = collider.GetComponent<Intruder>();
+                SOTG.Mechanics.Intruder.Intruder intruder = collider.GetComponent<SOTG.Mechanics.Intruder.Intruder>();
                 if (intruder != null)
                 {
                     Destroy(intruder.gameObject);
