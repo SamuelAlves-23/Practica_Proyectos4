@@ -22,6 +22,8 @@ namespace SOTG.Mechanics.Egg
 
         public IReadOnlyList<EggEntity> SpawnedEggs => _spawnedEggs;
 
+        public System.Action<int> OnEggCountChanged;
+
         private void Start()
         {
             // Load from config if available
@@ -84,6 +86,7 @@ namespace SOTG.Mechanics.Egg
             {
                 egg.OnKidnapped -= HandleEggKidnapped;
                 _spawnedEggs.Remove(egg);
+                OnEggCountChanged?.Invoke(_spawnedEggs.Count);
             }
         }
 

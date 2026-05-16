@@ -12,6 +12,8 @@ namespace SOTG.Mechanics.Player
         private NavMeshAgent _agent;
         private Camera _mainCamera;
 
+        public System.Action<Vector2> OnMovementChanged;
+
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -39,6 +41,8 @@ namespace SOTG.Mechanics.Player
 
         private void HandleMoveInput(Vector2 input)
         {
+            OnMovementChanged?.Invoke(input);
+
             if (input.magnitude > 0.1f)
             {
                 Move(input);

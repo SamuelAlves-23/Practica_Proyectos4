@@ -59,12 +59,24 @@
 - Elimina intrusos en rango al presionar Attack (E)
 - Ubicación: `Assets/Scripts/Mechanics/Player/`
 
+### ✅ GameManager (GameManager.cs)
+- Controla estado del juego (eggs restantes)
+- Detecta pérdida cuando todos los huevos son raptados
+- Eventos: OnEggsChanged, OnGameWon, OnGameLost
+- Método RestartGame() para reiniciar
+- Ubicación: `Assets/Scripts/Mechanics/Game/`
+
+### ✅ Animaciones (PlayerAnimationBridge.cs)
+- Conecta PlayerMovement y PlayerAttack con Animator
+- Envía parámetros XSpeed, YSpeed al animator
+- Envía trigger Attack al animator
+- Ubicación: `Assets/Scripts/Mechanics/Player/`
+
 ---
 
-## Pendiente
+## Completado
 
-- [ ] GameManager
-- [ ] Animaciones
+Todos los sistemas principales implementados.
 
 ---
 
