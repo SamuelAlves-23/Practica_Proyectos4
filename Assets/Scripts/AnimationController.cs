@@ -42,28 +42,27 @@ public class AnimationController : MonoBehaviour
 
     private void FixedUpdate()
     {
+       
         Vector3 moveDirection = new Vector3(inputVector.x, 0, inputVector.y);
+        moveDirection = camera.transform.TransformDirection(moveDirection);
+        moveDirection.y = 0;
+        
         moveDirection.Normalize();
 
         // Rotate 90° around Y-axis
        
 
         Vector3 cameraR = new Vector3(camera.transform.rotation.x, 0, camera.transform.rotation.z);
-        Quaternion rotation = Quaternion.Euler(cameraR.x, cameraR.y, cameraR.z);
+        Quaternion rotation = Quaternion.Euler(cameraR.x, 0, cameraR.z);
 
+       
+        rb.MovePosition(rb.position + moveDirection * movementSpeed * Time.fixedDeltaTime);
+
+        camera.transform.rotation = Quaternion.Euler(cameraR.x, 0, cameraR.z);
         rb.MoveRotation(camera.transform.rotation);
         rb.rotation = rotation;
 
-       
 
-       
-        
-
-
-        rb.MovePosition(rb.position + moveDirection * movementSpeed * Time.fixedDeltaTime);
-
-       
-        
         animator.SetFloat("XSpeed", inputVector.x);
         animator.SetFloat("YSpeed", inputVector.y);
 
