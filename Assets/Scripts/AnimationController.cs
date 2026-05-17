@@ -58,9 +58,9 @@ public class AnimationController : MonoBehaviour
        
         rb.MovePosition(rb.position + moveDirection * movementSpeed * Time.fixedDeltaTime);
 
-        camera.transform.rotation = Quaternion.Euler(cameraR.x, 0, cameraR.z);
+        //camera.transform.rotation = Quaternion.Euler(cameraR.x, 0, cameraR.z);
         rb.MoveRotation(camera.transform.rotation);
-        rb.rotation = rotation;
+        
 
 
         animator.SetFloat("XSpeed", inputVector.x);
