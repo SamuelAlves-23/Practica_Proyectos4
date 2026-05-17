@@ -400,6 +400,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4679610af7d21774a9f5fc01391790ad, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1403814201}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4679610af7d21774a9f5fc01391790ad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1334918211}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4679610af7d21774a9f5fc01391790ad, type: 3}
       insertIndex: -1
@@ -409,7 +412,7 @@ PrefabInstance:
       addedObject: {fileID: 302983200}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4679610af7d21774a9f5fc01391790ad, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 302983209}
+      addedObject: {fileID: 302983211}
   m_SourcePrefab: {fileID: 100100000, guid: 4679610af7d21774a9f5fc01391790ad, type: 3}
 --- !u!4 &302983198 stripped
 Transform:
@@ -471,7 +474,7 @@ CapsuleCollider:
   m_Height: 2.7339678
   m_Direction: 1
   m_Center: {x: -0.00818491, y: 1.2326984, z: 0.01502347}
---- !u!114 &302983209
+--- !u!114 &302983211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -484,6 +487,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimationController
   movementSpeed: 5
+  camera: {fileID: 1687310223}
+  player: {fileID: 302983199}
 --- !u!1 &783044266
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +640,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 302983198}
-  - {fileID: 1334918211}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1334918210
@@ -663,11 +667,11 @@ Transform:
   m_GameObject: {fileID: 1334918210}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.33, y: 1.26, z: 1.33}
+  m_LocalPosition: {x: 0.024769783, y: 1.26, z: 0.7098799}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 879141463}
+  m_Father: {fileID: 302983198}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1344927148
 GameObject:

@@ -19,6 +19,11 @@ public class ButtonController : MonoBehaviour
         SceneManager.LoadScene("SceneTest");
     }
 
+    public void LoadCredits()
+    {
+        SceneManager.LoadScene("CreditsScene");
+    }
+
     public void Salir()
     {
         Application.Quit();
