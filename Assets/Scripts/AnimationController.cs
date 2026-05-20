@@ -15,6 +15,10 @@ public class AnimationController : MonoBehaviour
     private float rotationSpeed = 1.0f;
     private bool jump;
     public GameObject player;
+    public GameObject hitbox;
+    public AudioSource audio;
+    public AudioClip clip;
+
 
     private void Awake()
     {
@@ -68,23 +72,40 @@ public class AnimationController : MonoBehaviour
 
         if (jump == true)
         {
-            Jump();
+            Attack();
             
         }
    
     }
 
-    private void Jump()
+    private void Attack()
     {
         animator.SetBool("Jump", true);
         animator.SetBool("Air", false);
+        movementSpeed = 0;
         StartCoroutine("DeactivateJump");
+       
+        
     }
 
     private IEnumerator DeactivateJump()
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(2.5f);
         animator.SetBool("Jump", false);
         animator.SetBool("Air", true);
+        movementSpeed = 5f;
     }
+
+    private void AttackAnimEvent()
+    {
+        hitbox.SetActive(true);
+        audio.PlayOneShot(clip);
+    }
+
+    private void UnAttackAnimEvent()
+    {
+        hitbox.SetActive(false);
+    }
+
+    
 }
