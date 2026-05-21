@@ -846,8 +846,8 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Practica_Proyectos4
-  metroPackageVersion: 
+  metroPackageName: PracticaProyectos4
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -855,7 +855,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: Practica_Proyectos4
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: Practica_Proyectos4
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
