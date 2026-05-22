@@ -11,15 +11,12 @@ namespace SOTG.Mechanics.Player
 
         // Input state
         private Vector2 _moveInput;
-        private bool _isAttackPressed;
 
         // Events for other components
         public System.Action<Vector2> OnMoveInput;
-        public System.Action OnAttackStarted;
 
         // Properties
         public Vector2 MoveInput => _moveInput;
-        public bool IsAttacking => _isAttackPressed;
 
         private void Awake()
         {
@@ -54,17 +51,9 @@ namespace SOTG.Mechanics.Player
             // Not used in this game - reserved for future
         }
 
-        public void OnAttack(InputAction.CallbackContext context)
+        public void OnCamera(InputAction.CallbackContext context)
         {
-            if (context.started)
-            {
-                _isAttackPressed = true;
-                OnAttackStarted?.Invoke();
-            }
-            else if (context.canceled)
-            {
-                _isAttackPressed = false;
-            }
+            // Not used in this game - camera is handled separately if needed
         }
 
         #endregion

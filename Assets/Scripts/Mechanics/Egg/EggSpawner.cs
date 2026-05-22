@@ -112,5 +112,50 @@ namespace SOTG.Mechanics.Egg
 
             return closest;
         }
+
+        /// <summary>
+        /// Returns an egg that is not kidnapped AND not targeted by another intruder.
+        /// </summary>
+        public EggEntity GetAvailableEgg(Vector3 position)
+        {
+            EggEntity bestCandidate = null;
+            float closestDistance = float.MaxValue;
+
+            foreach (EggEntity egg in _spawnedEggs)
+            {
+                if (egg == null || egg.IsKidnapped || egg.IsTargeted) continue;
+
+                float distance = Vector3.Distance(position, egg.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    bestCandidate = egg;
+                }
+            }
+
+            return bestCandidate;
+        }
+
+        /// <summary>
+        /// Marks an egg as targeted by an intruder.
+        /// </summary>
+        public void ClaimEgg(EggEntity egg)
+        {
+            if (egg != null)
+            {
+                egg.SetTargeted(true);
+            }
+        }
+
+        /// <summary>
+        /// Releases an egg so other intruders can target it.
+        /// </summary>
+        public void ReleaseEgg(EggEntity egg)
+        {
+            if (egg != null)
+            {
+                egg.SetTargeted(false);
+            }
+        }
     }
 }

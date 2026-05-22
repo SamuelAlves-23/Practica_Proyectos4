@@ -11,12 +11,12 @@ public class AnimationController : MonoBehaviour
     private Vector2 inputVector;
     private Vector2 delta;
     private Rigidbody rb;
-    public Camera camera;
+    public new Camera camera;
     private float rotationSpeed = 1.0f;
     private bool jump;
     public GameObject player;
     public GameObject hitbox;
-    public AudioSource audio;
+    public new AudioSource audio;
     public AudioClip clip;
 
 
@@ -53,17 +53,11 @@ public class AnimationController : MonoBehaviour
         
         moveDirection.Normalize();
 
-        // Rotate 90° around Y-axis
-       
-
-        Vector3 cameraR = new Vector3(camera.transform.rotation.x, 0, camera.transform.rotation.z);
-        Quaternion rotation = Quaternion.Euler(cameraR.x, 0, cameraR.z);
-
-       
         rb.MovePosition(rb.position + moveDirection * movementSpeed * Time.fixedDeltaTime);
 
-        //camera.transform.rotation = Quaternion.Euler(cameraR.x, 0, cameraR.z);
-        rb.MoveRotation(camera.transform.rotation);
+        // Only rotate horizontally with camera (yaw), ignore pitch and roll
+        Vector3 cameraEuler = camera.transform.eulerAngles;
+        rb.MoveRotation(Quaternion.Euler(0, cameraEuler.y, 0));
         
 
 

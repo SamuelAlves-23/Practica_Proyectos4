@@ -1,5 +1,4 @@
 using UnityEngine;
-using SOTG.Mechanics.Player;
 
 namespace SOTG.Mechanics.Player
 {
@@ -10,25 +9,20 @@ namespace SOTG.Mechanics.Player
     {
         [Header("References")]
         [SerializeField] private PlayerMovement _movement;
-        [SerializeField] private PlayerAttack _attack;
 
         private Animator _animator;
 
         private void Awake()
         {
-            _animator = GetComponent<Animator>();
+            // Get Animator from this object or children
+            _animator = GetComponentInChildren<Animator>();
         }
 
         private void Start()
         {
-            if (_movement != null)
+            if (_movement != null && _animator != null)
             {
                 _movement.OnMovementChanged += HandleMovement;
-            }
-
-            if (_attack != null)
-            {
-                _attack.OnAttackPerformed += HandleAttack;
             }
         }
 
@@ -38,11 +32,6 @@ namespace SOTG.Mechanics.Player
             {
                 _movement.OnMovementChanged -= HandleMovement;
             }
-
-            if (_attack != null)
-            {
-                _attack.OnAttackPerformed -= HandleAttack;
-            }
         }
 
         private void HandleMovement(Vector2 input)
@@ -51,13 +40,6 @@ namespace SOTG.Mechanics.Player
 
             _animator.SetFloat("XSpeed", input.x);
             _animator.SetFloat("YSpeed", input.y);
-        }
-
-        private void HandleAttack()
-        {
-            if (_animator == null) return;
-
-            _animator.SetTrigger("Attack");
         }
     }
 }
