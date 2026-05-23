@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4023154857449812677}
   - component: {fileID: 7454290302031909592}
   - component: {fileID: 2196166555024209928}
+  - component: {fileID: 876543210987654321}
   m_Layer: 0
   m_Name: Intruder_Josh
   m_TagString: Untagged
@@ -95,6 +96,28 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &876543210987654321
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6660637265939752181}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 63505672f429fb047978a024a4aaae81, type: 3}
+  m_Controller: {fileID: 9100000, guid: 22d90332948040b479ad92aa5e2a4eba, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1228088530061262626
 PrefabInstance:
   m_ObjectHideFlags: 0
