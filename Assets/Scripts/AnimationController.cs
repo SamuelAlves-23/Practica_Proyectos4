@@ -18,6 +18,7 @@ public class AnimationController : MonoBehaviour
     public GameObject hitbox;
     public AudioSource audio;
     public AudioClip clip;
+    public AudioClip step;
 
 
     private void Awake()
@@ -105,6 +106,11 @@ public class AnimationController : MonoBehaviour
     private void UnAttackAnimEvent()
     {
         hitbox.SetActive(false);
+    }
+
+    private void Step()
+    {
+        audio.PlayOneShot(step);
     }
 
     
