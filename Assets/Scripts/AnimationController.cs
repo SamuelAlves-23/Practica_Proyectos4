@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class AnimationController : MonoBehaviour
 {
-    public float movementSpeed = 5f;
+    public float movementSpeed = 8f;
     private Player_InputAction controls;
     private Animator animator;
     private Vector2 inputVector;
@@ -13,7 +13,9 @@ public class AnimationController : MonoBehaviour
     private Rigidbody rb;
     public new Camera camera;
     private float rotationSpeed = 1.0f;
-    private bool jump;
+    private bool _attackPressed;
+    private bool _isAttacking;
+    private float _originalSpeed;
     public GameObject player;
     public GameObject hitbox;
     public new AudioSource audio;
@@ -25,8 +27,7 @@ public class AnimationController : MonoBehaviour
         controls = new Player_InputAction();
         controls.Player.Move.performed += ctx => inputVector = ctx.ReadValue<Vector2>();
         controls.Player.Move.canceled += ctx => inputVector = Vector2.zero;
-        controls.Player.Jump.performed += ctx => jump = true;
-        controls.Player.Jump.canceled += ctx => jump = false;
+        controls.Player.Jump.performed += ctx => _attackPressed = true;
         controls.Player.Camera.performed += ctx => delta = Mouse.current.delta.ReadValue();
         controls.Player.Camera.canceled += ctx => delta = Vector2.zero;
 
@@ -64,30 +65,31 @@ public class AnimationController : MonoBehaviour
         animator.SetFloat("XSpeed", inputVector.x);
         animator.SetFloat("YSpeed", inputVector.y);
 
-        if (jump == true)
+        if (_attackPressed && !_isAttacking)
         {
+            _attackPressed = false;
             Attack();
-            
         }
    
     }
 
     private void Attack()
     {
+        _isAttacking = true;
+        _originalSpeed = movementSpeed;
         animator.SetBool("Jump", true);
         animator.SetBool("Air", false);
         movementSpeed = 0;
         StartCoroutine("DeactivateJump");
-       
-        
     }
 
     private IEnumerator DeactivateJump()
     {
-        yield return new WaitForSecondsRealtime(2.5f);
+        yield return new WaitForSecondsRealtime(2.35f);
         animator.SetBool("Jump", false);
         animator.SetBool("Air", true);
-        movementSpeed = 5f;
+        movementSpeed = _originalSpeed;
+        _isAttacking = false;
     }
 
     private void AttackAnimEvent()

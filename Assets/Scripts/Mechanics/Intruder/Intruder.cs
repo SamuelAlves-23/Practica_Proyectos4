@@ -11,7 +11,7 @@ namespace SOTG.Mechanics.Intruder
     public class Intruder : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField] private float _speed = 3f;
+        [SerializeField] private float _speed = 5f;
         [SerializeField] private float _kidnapRadius = 1f;
         [SerializeField] private float _detectionRadius = 30f;
         [SerializeField] private float _exitDistanceThreshold = 1.5f;

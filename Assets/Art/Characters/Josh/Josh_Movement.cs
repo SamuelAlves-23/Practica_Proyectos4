@@ -8,7 +8,7 @@ public class Josh_Movement : MonoBehaviour
     public float rotationSpeed = 10.0f;
 
     public Animator animator;
-    public string walking = "isWalking";
+    public string walking = "Walking";
 
     private Vector3 finalPoint;
     private Vector3 inicialPoint;

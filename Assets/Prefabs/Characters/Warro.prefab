@@ -366,7 +366,7 @@ Transform:
   m_GameObject: {fileID: 5189703082300893139}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2178971, y: -0.000000029086229, z: 0.0000000064938406, w: 0.97597176}
-  m_LocalPosition: {x: 0.024769783, y: 3.15, z: -3.2901201}
+  m_LocalPosition: {x: 0.02477169, y: 3.15, z: -3.2901182}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -693,6 +693,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e61b44f488d8e54499d20992544ce993, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 4679610af7d21774a9f5fc01391790ad, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -786,7 +790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e7ceff116c1b3488d675a3af5f4dfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimationController
-  movementSpeed: 5
+  movementSpeed: 8
   camera: {fileID: 939224609274740803}
   player: {fileID: 3527139570773358078}
   hitbox: {fileID: 2866167938774785505}
