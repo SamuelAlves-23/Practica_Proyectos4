@@ -85,7 +85,7 @@ public class AnimationController : MonoBehaviour
 
     private IEnumerator DeactivateJump()
     {
-        yield return new WaitForSecondsRealtime(2.35f);
+        yield return new WaitForSecondsRealtime(0.6f);
         animator.SetBool("Jump", false);
         animator.SetBool("Air", true);
         movementSpeed = _originalSpeed;
