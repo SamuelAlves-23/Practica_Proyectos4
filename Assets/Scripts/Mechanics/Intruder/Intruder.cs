@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using SOTG.Mechanics.Egg;
@@ -10,8 +11,19 @@ namespace SOTG.Mechanics.Intruder
     /// </summary>
     public class Intruder : MonoBehaviour
     {
-        [Header("Settings")]
-        [SerializeField] private float _speed = 5f;
+    /// <summary>
+    /// All active intruders in the scene (hand-placed + spawned).
+    /// Auto-populated via OnEnable/OnDisable.
+    /// </summary>
+    public static List<Intruder> AllIntruders { get; private set; } = new List<Intruder>();
+
+    /// <summary>
+    /// Fired when an intruder is killed by the player (not escaped).
+    /// </summary>
+    public static System.Action<Intruder> OnAnyIntruderKilled;
+
+    [Header("Settings")]
+    [SerializeField] private float _speed = 7.5f;
         [SerializeField] private float _kidnapRadius = 1f;
         [SerializeField] private float _detectionRadius = 30f;
         [SerializeField] private float _exitDistanceThreshold = 1.5f;
@@ -21,6 +33,7 @@ namespace SOTG.Mechanics.Intruder
         private Animator _animator;
         private EggEntity _targetEgg;
         private bool _hasKidnapped = false;
+        public bool HasKidnapped => _hasKidnapped;
         private bool _isEscaping = false;
         private bool _hasEscaped = false;
 
@@ -30,12 +43,25 @@ namespace SOTG.Mechanics.Intruder
         // Track the egg we actually kidnapped (for recovery if we die)
         private EggEntity _kidnappedEgg;
 
-        private void Awake()
+    private void OnEnable()
+    {
+        if (!AllIntruders.Contains(this))
         {
-            _agent = GetComponent<NavMeshAgent>();
-            _agent.speed = _speed;
-            _animator = GetComponentInChildren<Animator>();
+            AllIntruders.Add(this);
         }
+    }
+
+    private void OnDisable()
+    {
+        AllIntruders.Remove(this);
+    }
+
+    private void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = _speed;
+        _animator = GetComponentInChildren<Animator>();
+    }
 
         private void Update()
         {
@@ -199,6 +225,9 @@ namespace SOTG.Mechanics.Intruder
                 _kidnappedEgg.Recover();
                 _kidnappedEgg = null;
             }
+
+            // Notify before destroying — GameManager counts kills separately from escapes
+            OnAnyIntruderKilled?.Invoke(this);
 
             Destroy(gameObject);
         }

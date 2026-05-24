@@ -22,6 +22,16 @@ namespace SOTG.Mechanics.Egg
         /// </summary>
         public static List<EggEntity> AllEggs { get; private set; } = new List<EggEntity>();
 
+        /// <summary>
+        /// Fired when ANY egg is kidnapped. Used by GameManager for win/loss tracking.
+        /// </summary>
+        public static System.Action<EggEntity> OnAnyEggKidnapped;
+
+        /// <summary>
+        /// Fired when ANY egg is recovered (intruder killed while carrying it).
+        /// </summary>
+        public static System.Action<EggEntity> OnAnyEggRecovered;
+
         public bool IsKidnapped => _isKidnapped;
         public bool IsTargeted => _isTargeted;
 
@@ -103,6 +113,7 @@ namespace SOTG.Mechanics.Egg
             _isKidnapped = true;
             SetVisualsActive(false);
             OnKidnapped?.Invoke(this);
+            OnAnyEggKidnapped?.Invoke(this);
         }
 
         /// <summary>
@@ -117,6 +128,7 @@ namespace SOTG.Mechanics.Egg
             _isTargeted = false;
             SetVisualsActive(true);
             OnRecovered?.Invoke(this);
+            OnAnyEggRecovered?.Invoke(this);
         }
 
         private void SetVisualsActive(bool active)

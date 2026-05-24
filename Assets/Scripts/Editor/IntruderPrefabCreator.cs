@@ -42,7 +42,7 @@ public class IntruderPrefabCreator
 
         // Add NavMeshAgent
         NavMeshAgent agent = intruder.AddComponent<NavMeshAgent>();
-        agent.speed = 5f;
+        agent.speed = 7.5f;
         agent.radius = 0.5f;
         agent.height = 2f;
 
