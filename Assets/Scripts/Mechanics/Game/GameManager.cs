@@ -2,15 +2,11 @@ using UnityEngine;
 using SOTG.Mechanics.Egg;
 using UnityEngine.SceneManagement;
 
-// Type alias to resolve namespace/class collision (SOTG.Mechanics.Intruder vs Intruder class)
 using IntruderClass = SOTG.Mechanics.Intruder.Intruder;
 
 namespace SOTG.Mechanics.Game
 {
-    /// <summary>
-    /// Manages game state, tracks eggs and intruders, win/lose conditions.
-    /// Eggs and intruders are placed manually in the scene — no spawners.
-    /// </summary>
+
     public class GameManager : MonoBehaviour
     {
         [Header("Game Over")]
@@ -37,23 +33,18 @@ namespace SOTG.Mechanics.Game
 
         private void Start()
         {
-            // Count eggs placed manually in the scene
             _initialEggCount = EggEntity.AllEggs.Count;
             _currentEggCount = _initialEggCount;
 
-            // Subscribe to global egg kidnap/recover events
             EggEntity.OnAnyEggKidnapped += HandleEggKidnapped;
             EggEntity.OnAnyEggRecovered += HandleEggRecovered;
 
-            // Count ALL intruders in scene (hand-placed)
             _initialIntruderCount = IntruderClass.AllIntruders.Count;
             _currentIntruderCount = _initialIntruderCount;
 
-            // Track kills separately from escapes
             _intrudersKilled = 0;
             IntruderClass.OnAnyIntruderKilled += HandleIntruderKilled;
 
-            // Notify initial state
             OnEggsChanged?.Invoke(_currentEggCount);
             OnIntrudersChanged?.Invoke(_currentIntruderCount);
         }
@@ -72,7 +63,6 @@ namespace SOTG.Mechanics.Game
 
         private void Update()
         {
-            // Track intruder count in real-time (kills + escapes)
             if (!_isGameOver)
             {
                 int aliveCount = IntruderClass.AllIntruders.Count;
@@ -115,7 +105,6 @@ namespace SOTG.Mechanics.Game
         {
             if (_isGameOver) return;
 
-            // Win when all intruders are dead AND not all eggs are lost
             if (_currentIntruderCount <= 0 && _currentEggCount > 0)
             {
                 _isGameOver = true;
@@ -127,7 +116,6 @@ namespace SOTG.Mechanics.Game
 
         private void LoadGameOverScene()
         {
-            // Pass results via PlayerPrefs
             PlayerPrefs.SetInt("SOTG_LastResult_Won", PlayerWon ? 1 : 0);
             PlayerPrefs.SetInt("SOTG_LastResult_EggsRemaining", _currentEggCount);
             PlayerPrefs.SetInt("SOTG_LastResult_InitialEggs", _initialEggCount);
@@ -137,9 +125,6 @@ namespace SOTG.Mechanics.Game
             SceneManager.LoadScene(_gameOverSceneName);
         }
 
-        /// <summary>
-        /// Restart the game.
-        /// </summary>
         public void RestartGame()
         {
             _isGameOver = false;

@@ -3,10 +3,6 @@ using System.Collections.Generic;
 
 namespace SOTG.Mechanics.Intruder
 {
-    /// <summary>
-    /// Marks a game object as an exit cave for intruders.
-    /// All caves are registered automatically in a static list.
-    /// </summary>
     public class Cave : MonoBehaviour
     {
         public static List<Cave> AllCaves { get; private set; } = new List<Cave>();
@@ -29,9 +25,6 @@ namespace SOTG.Mechanics.Intruder
             AllCaves.Remove(this);
         }
 
-        /// <summary>
-        /// Returns the nearest cave from the intruder's position.
-        /// </summary>
         public static Transform GetNearestCave(Vector3 intruderPosition)
         {
             if (AllCaves.Count == 0) return null;

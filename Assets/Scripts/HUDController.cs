@@ -14,13 +14,11 @@ public class HUDController : MonoBehaviour
 
     private void Awake()
     {
-        // Try to find UI Canvas in children first (prefab-placed)
         if (criaturasLabel == null || criaturasValue == null || intrusosLabel == null || intrusosValue == null)
         {
             FindUICanvasInChildren();
         }
 
-        // Fallback: create Canvas at runtime if still missing
         if (criaturasValue == null || intrusosValue == null)
         {
             CreateHUDCanvas();
@@ -32,35 +30,28 @@ public class HUDController : MonoBehaviour
         Transform uiTransform = transform.Find("UI");
         if (uiTransform == null) return;
 
-        // Find Criaturas label
         Transform criaturasLabelT = uiTransform.Find("Criaturas");
         if (criaturasLabelT != null) criaturasLabel = criaturasLabelT.GetComponent<TMP_Text>();
 
-        // Find Criaturas value
         Transform criaturasValueT = uiTransform.Find("Criaturas (1)");
         if (criaturasValueT != null) criaturasValue = criaturasValueT.GetComponent<TMP_Text>();
 
-        // Find Intrusos label
         Transform intrusosLabelT = uiTransform.Find("Intrusos");
         if (intrusosLabelT != null) intrusosLabel = intrusosLabelT.GetComponent<TMP_Text>();
 
-        // Find Intrusos value
         Transform intrusosValueT = uiTransform.Find("Intrusos (1)");
         if (intrusosValueT != null) intrusosValue = intrusosValueT.GetComponent<TMP_Text>();
     }
 
     private void Start()
     {
-        // Find GameManager automatically
         _gameManager = FindFirstObjectByType<GameManager>();
 
         if (_gameManager != null)
         {
-            // Subscribe to events
             _gameManager.OnEggsChanged += UpdateEggCount;
             _gameManager.OnIntrudersChanged += UpdateIntruderCount;
 
-            // Initialize with current values
             UpdateEggCount(_gameManager.EggsRemaining);
             UpdateIntruderCount(_gameManager.IntrudersRemaining);
         }
@@ -68,7 +59,6 @@ public class HUDController : MonoBehaviour
 
     private void CreateHUDCanvas()
     {
-        // Create Canvas root
         GameObject canvasGO = new GameObject("HUD Canvas", typeof(Canvas), typeof(UnityEngine.UI.CanvasScaler), typeof(UnityEngine.UI.GraphicRaycaster));
         canvasGO.transform.SetParent(transform, false);
 
@@ -80,11 +70,9 @@ public class HUDController : MonoBehaviour
         scaler.uiScaleMode = UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920, 1080);
 
-        // Create combined "Criaturas: 0" text
         GameObject criaturasGO = CreateText(canvasGO, "Criaturas", "Criaturas: 0", new Vector2(-750, 480));
         criaturasValue = criaturasGO.GetComponent<TMP_Text>();
 
-        // Create combined "Intrusos: 0" text
         GameObject intrusosGO = CreateText(canvasGO, "Intrusos", "Intrusos: 0", new Vector2(750, 480));
         intrusosValue = intrusosGO.GetComponent<TMP_Text>();
     }

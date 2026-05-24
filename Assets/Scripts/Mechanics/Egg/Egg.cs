@@ -3,11 +3,6 @@ using UnityEngine;
 
 namespace SOTG.Mechanics.Egg
 {
-    /// <summary>
-    /// Represents an egg that can be kidnapped by intruders.
-    /// Eggs auto-register in a static list so intruders can find them
-    /// without an EggSpawner (eggs placed manually in scene).
-    /// </summary>
     public class EggEntity : MonoBehaviour
     {
         [Header("Status")]
@@ -17,19 +12,10 @@ namespace SOTG.Mechanics.Egg
         [Header("Visual")]
         [SerializeField] private GameObject _visualRoot;
 
-        /// <summary>
-        /// All active eggs in the scene. Auto-populated via OnEnable/OnDisable.
-        /// </summary>
         public static List<EggEntity> AllEggs { get; private set; } = new List<EggEntity>();
 
-        /// <summary>
-        /// Fired when ANY egg is kidnapped. Used by GameManager for win/loss tracking.
-        /// </summary>
         public static System.Action<EggEntity> OnAnyEggKidnapped;
 
-        /// <summary>
-        /// Fired when ANY egg is recovered (intruder killed while carrying it).
-        /// </summary>
         public static System.Action<EggEntity> OnAnyEggRecovered;
 
         public bool IsKidnapped => _isKidnapped;
@@ -39,7 +25,6 @@ namespace SOTG.Mechanics.Egg
 
         private void Awake()
         {
-            // If no explicit visual root, find renderers on this object and children
             if (_visualRoot != null)
             {
                 _renderers = _visualRoot.GetComponentsInChildren<Renderer>(true);
@@ -72,10 +57,6 @@ namespace SOTG.Mechanics.Egg
         {
             _isTargeted = targeted;
         }
-
-        /// <summary>
-        /// Finds the nearest available (not kidnapped, not targeted) egg.
-        /// </summary>
         public static EggEntity GetAvailableEgg(Vector3 fromPosition)
         {
             EggEntity bestCandidate = null;
@@ -101,11 +82,6 @@ namespace SOTG.Mechanics.Egg
 
             return bestCandidate;
         }
-
-        /// <summary>
-        /// Called when an intruder kidnaps this egg.
-        /// Disables visuals so the egg appears taken, but keeps the GameObject alive.
-        /// </summary>
         public void Kidnap()
         {
             if (_isKidnapped) return;
@@ -116,10 +92,6 @@ namespace SOTG.Mechanics.Egg
             OnAnyEggKidnapped?.Invoke(this);
         }
 
-        /// <summary>
-        /// Called when the intruder carrying this egg is killed.
-        /// Re-enables visuals so the egg reappears where it was.
-        /// </summary>
         public void Recover()
         {
             if (!_isKidnapped) return;

@@ -5,21 +5,10 @@ using SOTG.Mechanics.Egg;
 
 namespace SOTG.Mechanics.Intruder
 {
-    /// <summary>
-    /// AI intruder that seeks eggs, kidnaps them, and escapes to caves.
-    /// States: Searching -> CarryingEgg -> Escaping
-    /// </summary>
     public class Intruder : MonoBehaviour
     {
-    /// <summary>
-    /// All active intruders in the scene (hand-placed + spawned).
-    /// Auto-populated via OnEnable/OnDisable.
-    /// </summary>
     public static List<Intruder> AllIntruders { get; private set; } = new List<Intruder>();
 
-    /// <summary>
-    /// Fired when an intruder is killed by the player (not escaped).
-    /// </summary>
     public static System.Action<Intruder> OnAnyIntruderKilled;
 
     [Header("Settings")]
@@ -37,10 +26,8 @@ namespace SOTG.Mechanics.Intruder
         private bool _isEscaping = false;
         private bool _hasEscaped = false;
 
-        // Track which egg we're targeting (for claim/release)
         private EggEntity _targetedEgg;
 
-        // Track the egg we actually kidnapped (for recovery if we die)
         private EggEntity _kidnappedEgg;
 
     private void OnEnable()
@@ -67,14 +54,10 @@ namespace SOTG.Mechanics.Intruder
         {
             if (_hasEscaped) return;
 
-            // Drive animator parameters from NavMeshAgent velocity
             UpdateAnimation();
 
-            // After kidnapping, stop looking for eggs and start escaping
             if (_hasKidnapped || _isEscaping)
             {
-                // Only check cave arrival when we're actually escaping,
-                // not right after kidnap (agent is still at egg position, distance ≈ 0)
                 if (_isEscaping && !_agent.pathPending && _agent.remainingDistance <= _exitDistanceThreshold)
                 {
                     Escape();
@@ -82,10 +65,8 @@ namespace SOTG.Mechanics.Intruder
                 return;
             }
 
-            // Check if we still have a valid target egg
             if (_targetEgg != null && !_targetEgg.IsKidnapped)
             {
-                // State: Moving to target egg
                 _agent.SetDestination(_targetEgg.transform.position);
 
                 float distance = Vector3.Distance(transform.position, _targetEgg.transform.position);
@@ -96,7 +77,6 @@ namespace SOTG.Mechanics.Intruder
             }
             else
             {
-                // State: Looking for eggs or escaping
                 FindNewTarget();
             }
         }
@@ -105,11 +85,9 @@ namespace SOTG.Mechanics.Intruder
         {
             if (_animator == null) return;
 
-            // Convert world velocity to local space relative to agent's facing direction
             Vector3 velocity = _agent.velocity;
             Vector3 localVelocity = transform.InverseTransformDirection(velocity);
 
-            // Use forward speed (local Z) as the 1D blend parameter for XSpeed
             float forwardSpeed = Mathf.Clamp01(Mathf.Abs(localVelocity.z) / _speed);
 
             _animator.SetFloat("XSpeed", forwardSpeed, _animatorDampTime, Time.deltaTime);
@@ -119,19 +97,16 @@ namespace SOTG.Mechanics.Intruder
 
         private void FindNewTarget()
         {
-            // Release our previous target so other intruders can claim it
             if (_targetedEgg != null)
             {
                 _targetedEgg.SetTargeted(false);
                 _targetedEgg = null;
             }
 
-            // Find an available egg via the static EggEntity registry
             EggEntity availableEgg = EggEntity.GetAvailableEgg(transform.position);
 
             if (availableEgg != null)
             {
-                // Claim this egg so other intruders don't target it
                 availableEgg.SetTargeted(true);
                 _targetedEgg = availableEgg;
                 _targetEgg = availableEgg;
@@ -139,7 +114,6 @@ namespace SOTG.Mechanics.Intruder
             }
             else
             {
-                // No eggs available - escape to nearest cave
                 GoToNearestCave();
             }
         }
@@ -148,7 +122,6 @@ namespace SOTG.Mechanics.Intruder
         {
             if (_targetEgg == null || _hasKidnapped) return;
 
-            // Release the egg claim before kidnapping
             if (_targetedEgg != null)
             {
                 _targetedEgg.SetTargeted(false);
@@ -157,12 +130,10 @@ namespace SOTG.Mechanics.Intruder
 
             _hasKidnapped = true;
 
-            // Store reference for recovery if we die before escaping
             _kidnappedEgg = _targetEgg;
             _kidnappedEgg.Kidnap();
             _targetEgg = null;
 
-            // After kidnapping, escape to nearest cave
             Invoke(nameof(GoToNearestCave), 0.3f);
         }
 
@@ -184,7 +155,6 @@ namespace SOTG.Mechanics.Intruder
         {
             _hasEscaped = true;
 
-            // Intruder escaped with the egg — it's lost forever
             if (_kidnappedEgg != null)
             {
                 Destroy(_kidnappedEgg.gameObject);
@@ -196,16 +166,12 @@ namespace SOTG.Mechanics.Intruder
 
         private void OnTriggerEnter(Collider other)
         {
-            // Die when touching player
             if (other.CompareTag("Player"))
             {
                 Die();
             }
         }
 
-        /// <summary>
-        /// Called by HitBox when the player attacks this intruder.
-        /// </summary>
         public void Kill()
         {
             Die();
@@ -213,20 +179,17 @@ namespace SOTG.Mechanics.Intruder
 
         private void Die()
         {
-            // Release our target if we die
             if (_targetedEgg != null)
             {
                 _targetedEgg.SetTargeted(false);
             }
 
-            // If we were carrying a kidnapped egg, recover it
             if (_kidnappedEgg != null)
             {
                 _kidnappedEgg.Recover();
                 _kidnappedEgg = null;
             }
 
-            // Notify before destroying — GameManager counts kills separately from escapes
             OnAnyIntruderKilled?.Invoke(this);
 
             Destroy(gameObject);

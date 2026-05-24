@@ -11,7 +11,6 @@ public class GameOverController : MonoBehaviour
 
     private void Awake()
     {
-        // Auto-find texts by transform path if not manually assigned
         if (resultadoText == null)
             resultadoText = transform.Find("ResultadoText")?.GetComponent<TMP_Text>();
         if (huevosText == null)
@@ -22,7 +21,6 @@ public class GameOverController : MonoBehaviour
 
     private void Start()
     {
-        // Read results passed from GameManager
         bool won = PlayerPrefs.GetInt("SOTG_LastResult_Won", 0) == 1;
         int eggsRemaining = PlayerPrefs.GetInt("SOTG_LastResult_EggsRemaining", 0);
         int initialEggs = PlayerPrefs.GetInt("SOTG_LastResult_InitialEggs", 0);
